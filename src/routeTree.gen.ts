@@ -15,6 +15,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthenticatedOnboardingRouteImport } from './routes/_authenticated/onboarding'
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
 import { Route as AuthenticatedWomenRouteRouteImport } from './routes/_authenticated/women/route'
+import { Route as AuthenticatedWomenIndexRouteImport } from './routes/_authenticated/women/index'
 
 const AuthRoute = AuthRouteImport.update({
   id: '/auth',
@@ -45,35 +46,42 @@ const AuthenticatedWomenRouteRoute = AuthenticatedWomenRouteRouteImport.update({
   path: '/women',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedWomenIndexRoute = AuthenticatedWomenIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AuthenticatedWomenRouteRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
-  '/women': typeof AuthenticatedWomenRouteRoute
+  '/women': typeof AuthenticatedWomenRouteRouteWithChildren
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/onboarding': typeof AuthenticatedOnboardingRoute
+  '/women/': typeof AuthenticatedWomenIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
-  '/women': typeof AuthenticatedWomenRouteRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/onboarding': typeof AuthenticatedOnboardingRoute
+  '/women': typeof AuthenticatedWomenIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/auth': typeof AuthRoute
-  '/_authenticated/women': typeof AuthenticatedWomenRouteRoute
+  '/_authenticated/women': typeof AuthenticatedWomenRouteRouteWithChildren
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
   '/_authenticated/onboarding': typeof AuthenticatedOnboardingRoute
+  '/_authenticated/women/': typeof AuthenticatedWomenIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/auth' | '/women' | '/dashboard' | '/onboarding'
+  fullPaths: '/' | '/auth' | '/women' | '/dashboard' | '/onboarding' | '/women/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/auth' | '/women' | '/dashboard' | '/onboarding'
+  to: '/' | '/auth' | '/dashboard' | '/onboarding' | '/women'
   id:
     | '__root__'
     | '/'
@@ -82,6 +90,7 @@ export interface FileRouteTypes {
     | '/_authenticated/women'
     | '/_authenticated/dashboard'
     | '/_authenticated/onboarding'
+    | '/_authenticated/women/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -134,17 +143,38 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedWomenRouteRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/women/': {
+      id: '/_authenticated/women/'
+      path: '/'
+      fullPath: '/women/'
+      preLoaderRoute: typeof AuthenticatedWomenIndexRouteImport
+      parentRoute: typeof AuthenticatedWomenRouteRoute
+    }
   }
 }
 
+interface AuthenticatedWomenRouteRouteChildren {
+  AuthenticatedWomenIndexRoute: typeof AuthenticatedWomenIndexRoute
+}
+
+const AuthenticatedWomenRouteRouteChildren: AuthenticatedWomenRouteRouteChildren =
+  {
+    AuthenticatedWomenIndexRoute: AuthenticatedWomenIndexRoute,
+  }
+
+const AuthenticatedWomenRouteRouteWithChildren =
+  AuthenticatedWomenRouteRoute._addFileChildren(
+    AuthenticatedWomenRouteRouteChildren,
+  )
+
 interface AuthenticatedRouteRouteChildren {
-  AuthenticatedWomenRouteRoute: typeof AuthenticatedWomenRouteRoute
+  AuthenticatedWomenRouteRoute: typeof AuthenticatedWomenRouteRouteWithChildren
   AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
   AuthenticatedOnboardingRoute: typeof AuthenticatedOnboardingRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
-  AuthenticatedWomenRouteRoute: AuthenticatedWomenRouteRoute,
+  AuthenticatedWomenRouteRoute: AuthenticatedWomenRouteRouteWithChildren,
   AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
   AuthenticatedOnboardingRoute: AuthenticatedOnboardingRoute,
 }
@@ -160,3 +190,13 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
