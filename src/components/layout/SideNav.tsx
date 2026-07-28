@@ -1,15 +1,17 @@
 import { Link, useRouterState } from "@tanstack/react-router";
-import { Heart, LogOut } from "lucide-react";
+import { Heart, LogOut, Shield } from "lucide-react";
 import { PRIMARY_NAV } from "@/constants/nav";
 import { cn } from "@/lib/utils";
 import { supabase } from "@/integrations/supabase/client";
 import { useQueryClient } from "@tanstack/react-query";
 import { useNavigate } from "@tanstack/react-router";
+import { useIsAdmin } from "@/hooks/use-admin";
 
 export function SideNav() {
   const pathname = useRouterState({ select: (s) => s.location.pathname });
   const qc = useQueryClient();
   const navigate = useNavigate();
+  const { isAdmin } = useIsAdmin();
 
   const signOut = async () => {
     await qc.cancelQueries();
@@ -49,6 +51,20 @@ export function SideNav() {
             </Link>
           );
         })}
+        {isAdmin && (
+          <Link
+            to="/admin"
+            className={cn(
+              "flex items-center gap-3 rounded-2xl px-3 py-2 text-sm font-medium transition-colors",
+              pathname.startsWith("/admin")
+                ? "bg-purple-500/12 text-purple-600"
+                : "text-muted-foreground hover:bg-accent/40 hover:text-foreground",
+            )}
+          >
+            <Shield className="h-4 w-4" />
+            Admin Panel
+          </Link>
+        )}
       </nav>
       <button
         onClick={signOut}

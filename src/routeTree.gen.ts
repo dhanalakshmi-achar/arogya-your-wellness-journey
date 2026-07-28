@@ -22,6 +22,11 @@ import { Route as AuthenticatedFitnessRouteImport } from './routes/_authenticate
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
 import { Route as AuthenticatedAiCoachRouteImport } from './routes/_authenticated/ai-coach'
 import { Route as AuthenticatedAchievementsRouteImport } from './routes/_authenticated/achievements'
+import { Route as AuthenticatedAdminRouteRouteImport } from './routes/_authenticated/admin/route'
+import { Route as AuthenticatedAdminIndexRouteImport } from './routes/_authenticated/admin/index'
+import { Route as AuthenticatedAdminUsersRouteImport } from './routes/_authenticated/admin/users'
+import { Route as AuthenticatedAdminActivityRouteImport } from './routes/_authenticated/admin/activity'
+import { Route as AuthenticatedAdminHealthOverviewRouteImport } from './routes/_authenticated/admin/health-overview'
 import { Route as AuthenticatedWomenRouteRouteImport } from './routes/_authenticated/women/route'
 import { Route as AuthenticatedWomenIndexRouteImport } from './routes/_authenticated/women/index'
 import { Route as AuthenticatedWomenPregnancyRouteImport } from './routes/_authenticated/women/pregnancy'
@@ -42,6 +47,31 @@ const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
+} as any)
+const AuthenticatedAdminRouteRoute = AuthenticatedAdminRouteRouteImport.update({
+  id: '/admin',
+  path: '/admin',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedAdminIndexRoute = AuthenticatedAdminIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AuthenticatedAdminRouteRoute,
+} as any)
+const AuthenticatedAdminUsersRoute = AuthenticatedAdminUsersRouteImport.update({
+  id: '/users',
+  path: '/users',
+  getParentRoute: () => AuthenticatedAdminRouteRoute,
+} as any)
+const AuthenticatedAdminActivityRoute = AuthenticatedAdminActivityRouteImport.update({
+  id: '/activity',
+  path: '/activity',
+  getParentRoute: () => AuthenticatedAdminRouteRoute,
+} as any)
+const AuthenticatedAdminHealthOverviewRoute = AuthenticatedAdminHealthOverviewRouteImport.update({
+  id: '/health-overview',
+  path: '/health-overview',
+  getParentRoute: () => AuthenticatedAdminRouteRoute,
 } as any)
 const AuthenticatedSleepRoute = AuthenticatedSleepRouteImport.update({
   id: '/sleep',
@@ -132,6 +162,11 @@ const AuthenticatedWomenCalendarRoute =
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
+  '/admin': typeof AuthenticatedAdminRouteRouteWithChildren
+  '/admin/': typeof AuthenticatedAdminIndexRoute
+  '/admin/users': typeof AuthenticatedAdminUsersRoute
+  '/admin/activity': typeof AuthenticatedAdminActivityRoute
+  '/admin/health-overview': typeof AuthenticatedAdminHealthOverviewRoute
   '/women': typeof AuthenticatedWomenRouteRouteWithChildren
   '/achievements': typeof AuthenticatedAchievementsRoute
   '/ai-coach': typeof AuthenticatedAiCoachRoute
@@ -152,6 +187,10 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
+  '/admin': typeof AuthenticatedAdminIndexRoute
+  '/admin/users': typeof AuthenticatedAdminUsersRoute
+  '/admin/activity': typeof AuthenticatedAdminActivityRoute
+  '/admin/health-overview': typeof AuthenticatedAdminHealthOverviewRoute
   '/achievements': typeof AuthenticatedAchievementsRoute
   '/ai-coach': typeof AuthenticatedAiCoachRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
@@ -173,6 +212,11 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/auth': typeof AuthRoute
+  '/_authenticated/admin': typeof AuthenticatedAdminRouteRouteWithChildren
+  '/_authenticated/admin/': typeof AuthenticatedAdminIndexRoute
+  '/_authenticated/admin/users': typeof AuthenticatedAdminUsersRoute
+  '/_authenticated/admin/activity': typeof AuthenticatedAdminActivityRoute
+  '/_authenticated/admin/health-overview': typeof AuthenticatedAdminHealthOverviewRoute
   '/_authenticated/women': typeof AuthenticatedWomenRouteRouteWithChildren
   '/_authenticated/achievements': typeof AuthenticatedAchievementsRoute
   '/_authenticated/ai-coach': typeof AuthenticatedAiCoachRoute
@@ -195,6 +239,11 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/auth'
+    | '/admin'
+    | '/admin/'
+    | '/admin/users'
+    | '/admin/activity'
+    | '/admin/health-overview'
     | '/women'
     | '/achievements'
     | '/ai-coach'
@@ -215,6 +264,10 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/auth'
+    | '/admin'
+    | '/admin/users'
+    | '/admin/activity'
+    | '/admin/health-overview'
     | '/achievements'
     | '/ai-coach'
     | '/dashboard'
@@ -235,6 +288,11 @@ export interface FileRouteTypes {
     | '/'
     | '/_authenticated'
     | '/auth'
+    | '/_authenticated/admin'
+    | '/_authenticated/admin/'
+    | '/_authenticated/admin/users'
+    | '/_authenticated/admin/activity'
+    | '/_authenticated/admin/health-overview'
     | '/_authenticated/women'
     | '/_authenticated/achievements'
     | '/_authenticated/ai-coach'
@@ -281,6 +339,41 @@ declare module '@tanstack/react-router' {
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated/admin': {
+      id: '/_authenticated/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AuthenticatedAdminRouteRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/admin/': {
+      id: '/_authenticated/admin/'
+      path: '/'
+      fullPath: '/admin/'
+      preLoaderRoute: typeof AuthenticatedAdminIndexRouteImport
+      parentRoute: typeof AuthenticatedAdminRouteRoute
+    }
+    '/_authenticated/admin/users': {
+      id: '/_authenticated/admin/users'
+      path: '/users'
+      fullPath: '/admin/users'
+      preLoaderRoute: typeof AuthenticatedAdminUsersRouteImport
+      parentRoute: typeof AuthenticatedAdminRouteRoute
+    }
+    '/_authenticated/admin/activity': {
+      id: '/_authenticated/admin/activity'
+      path: '/activity'
+      fullPath: '/admin/activity'
+      preLoaderRoute: typeof AuthenticatedAdminActivityRouteImport
+      parentRoute: typeof AuthenticatedAdminRouteRoute
+    }
+    '/_authenticated/admin/health-overview': {
+      id: '/_authenticated/admin/health-overview'
+      path: '/health-overview'
+      fullPath: '/admin/health-overview'
+      preLoaderRoute: typeof AuthenticatedAdminHealthOverviewRouteImport
+      parentRoute: typeof AuthenticatedAdminRouteRoute
     }
     '/_authenticated/sleep': {
       id: '/_authenticated/sleep'
@@ -419,7 +512,27 @@ const AuthenticatedWomenRouteRouteWithChildren =
     AuthenticatedWomenRouteRouteChildren,
   )
 
+interface AuthenticatedAdminRouteRouteChildren {
+  AuthenticatedAdminIndexRoute: typeof AuthenticatedAdminIndexRoute
+  AuthenticatedAdminUsersRoute: typeof AuthenticatedAdminUsersRoute
+  AuthenticatedAdminActivityRoute: typeof AuthenticatedAdminActivityRoute
+  AuthenticatedAdminHealthOverviewRoute: typeof AuthenticatedAdminHealthOverviewRoute
+}
+
+const AuthenticatedAdminRouteRouteChildren: AuthenticatedAdminRouteRouteChildren = {
+  AuthenticatedAdminIndexRoute: AuthenticatedAdminIndexRoute,
+  AuthenticatedAdminUsersRoute: AuthenticatedAdminUsersRoute,
+  AuthenticatedAdminActivityRoute: AuthenticatedAdminActivityRoute,
+  AuthenticatedAdminHealthOverviewRoute: AuthenticatedAdminHealthOverviewRoute,
+}
+
+const AuthenticatedAdminRouteRouteWithChildren =
+  AuthenticatedAdminRouteRoute._addFileChildren(
+    AuthenticatedAdminRouteRouteChildren,
+  )
+
 interface AuthenticatedRouteRouteChildren {
+  AuthenticatedAdminRouteRoute: typeof AuthenticatedAdminRouteRouteWithChildren
   AuthenticatedWomenRouteRoute: typeof AuthenticatedWomenRouteRouteWithChildren
   AuthenticatedAchievementsRoute: typeof AuthenticatedAchievementsRoute
   AuthenticatedAiCoachRoute: typeof AuthenticatedAiCoachRoute
@@ -434,6 +547,7 @@ interface AuthenticatedRouteRouteChildren {
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedAdminRouteRoute: AuthenticatedAdminRouteRouteWithChildren,
   AuthenticatedWomenRouteRoute: AuthenticatedWomenRouteRouteWithChildren,
   AuthenticatedAchievementsRoute: AuthenticatedAchievementsRoute,
   AuthenticatedAiCoachRoute: AuthenticatedAiCoachRoute,
