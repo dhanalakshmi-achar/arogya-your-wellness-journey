@@ -1,68 +1,135 @@
+# Arogya — Full Functionality Pass (Frontend-Only)
 
-# Arogya v1 — Build Plan
+Goal: turn every screen from a high-fidelity mockup into a working app. No backend changes — all data lives in a centralized client store (Zustand + `localStorage` persistence) so a real API can be wired later without touching UI.
 
-The full spec is huge (14 pages, 4 pillars, ~40 features). Trying to ship it all in one pass would produce a shallow, buggy app. This plan delivers a polished, production-ready foundation you can grow into, matching the premium wellness feel described.
+## 1. Foundations
 
-## Scope decisions (chosen for you)
+- **Global store** (`src/store/`): Zustand slices with `persist` middleware, one key per domain.
+  - `profile` — name, avatar, physical metrics, goals, preferences, theme.
+  - `nutrition` — meals[], water entries, daily targets, derived macros.
+  - `fitness` — workouts[], exercise library, completed sessions, XP awards.
+  - `sleep` — sleep logs[], derived score, recommendations.
+  - `mental` — mood logs[], journal entries[], meditation sessions[].
+  - `women` — cycle logs[], symptoms[], hormone notes, predictions.
+  - `gamification` — xp, level, streaks, badges, daily missions.
+  - `notifications` — items[], reminder settings, read state.
+  - `checklist` — today's tasks, completion state per date.
+  - `ai` — conversation history, suggestions.
+- **Selectors / derivations** (`src/lib/derive.ts`): health score, macro totals, sleep score, cycle prediction, weekly aggregates, XP + streak calculators.
+- **Seed data** (`src/lib/seed.ts`): realistic starter meals/exercises/moods so first-run UI isn't empty; user actions replace/extend it.
+- **Shared UI primitives**:
+  - `EmptyState`, `LoadingState`, `ErrorState` (extend existing `EmptyState`).
+  - `Modal`, `Sheet`, `ConfirmDialog` wrappers over shadcn.
+  - `FormField` with Zod + react-hook-form validation and inline errors.
+  - Toast-based feedback for every create/update/delete.
 
-- **Build first:** design system, landing, auth, onboarding, main Dashboard, Women's Health (fully themed), and routed skeletons for every other page so navigation feels complete.
-- **Backend:** enable Lovable Cloud now — email + Google auth, profiles table, and schema for the trackers we render. Other tables stubbed as we build each module.
-- **AI Coach:** ship the floating AI button and chat UI shell now, wire the actual model in a follow-up pass to keep this build focused.
+## 2. Dashboard
 
-## What you get in v1
+- Health score computed from today's nutrition/water/sleep/exercise vs goals.
+- Progress rings + stat cards read live from store selectors.
+- Checklist becomes interactive with add/toggle/delete + per-date persistence.
+- Quick-action cards link to real module screens (already routed).
+- Working search command palette (`cmdk`) over routes, meals, workouts, journal.
+- Notification bell opens the notification center sheet.
 
-### 1. Design system (`src/styles.css` + tokens)
-- Two themes as semantic tokens: **main** (indigo/violet #8B7CF6, soft slate bg) and **women** (rose/pink #EC4899, blush bg #FFF7FB), switched via a `data-theme="women"` attribute on route subtrees.
-- Radius 24px, soft shadows, pastel gradients, glass hero utility, dark mode variables.
-- Fonts loaded via `<link>` in `__root.tsx`: Poppins (headings), Inter (body), Manrope (numbers).
-- All shadcn components re-skinned through tokens — no hardcoded colors in components.
+## 3. Nutrition
 
-### 2. Routes (TanStack Router — the stack this template uses)
-```text
-/                       Landing (hero, pillars, CTA)
-/auth                   Sign in / Sign up (email + Google)
-/onboarding             Multi-step: profile, goals, units
-/_authenticated/
-  dashboard             Main dashboard (fully built)
-  nutrition             Skeleton with header + empty state
-  fitness               Skeleton
-  sleep                 Skeleton
-  mental                Skeleton
-  women                 Women's Health (fully built, pink theme)
-    /cycle /pregnancy /hormones /symptoms /calendar /insights
-  ai-coach              Chat UI shell (no model yet)
-  reports               Skeleton
-  achievements          Skeleton
-  profile               Profile + settings
-```
-Note: the stack is **TanStack Start + Tailwind v4**, not Vite + React Router as the brief lists. I'll keep the requested libraries (Framer Motion, shadcn, Recharts, RHF+Zod, Lucide) and use the actual routing/styling the template ships with.
+- CRUD meals with fields (name, time, portions, macros); food library with search.
+- Auto-sum calories/protein/carbs/fat vs goals; ring updates live.
+- Water tracker: +/- glasses, ml progress, resets daily.
+- Meal history grouped by day; edit/delete inline.
+- Charts (Recharts) driven by last-7-day store data.
 
-### 3. Dashboard
-Greeting + avatar + notifications + search · Hero card with health score, XP, streak, quote · 2×2 quick actions · 4 animated progress rings (calories/water/sleep/exercise) via Recharts + Framer Motion · AI recommendation card · Today's checklist · Bottom nav (mobile) + sidebar (desktop) · Floating AI button.
+## 4. Fitness
 
-### 4. Women's Health (dedicated pink experience)
-Distinct rose palette, floral SVG illustrations, wave backgrounds, cycle ring, upcoming-period card, symptoms grid, mood strip, calendar with phase coloring, insight cards. Fully responsive.
+- Workout builder: pick from exercise library, sets/reps/duration, save as template.
+- Start session → log completion → award XP + update streak.
+- History list with filters; per-exercise progress charts.
+- Rest timer + set checkoff during active session.
 
-### 5. Auth & data (Lovable Cloud)
-- Email + Google sign-in (Google via Lovable broker).
-- `profiles` table (name, dob, sex, height, weight, goal, units, avatar) + trigger on signup.
-- `user_roles` table + `has_role()` (security-definer) — future-proofing.
-- Starter tables: `health_metrics` (daily rings), `cycle_logs` (women's), `checklist_items`.
-- RLS + grants per project rules; owner-only policies.
+## 5. Sleep
 
-### 6. Reusable components
-`HealthCard`, `ProgressRing`, `StatCard`, `QuickActionCard`, `SectionHeader`, `GlassHero`, `BottomNav`, `TopNav`, `FloatingAIButton`, `AIChatBubble`, `EmptyState`, `LoadingState`, `ErrorState`, `CycleRing`, `PeriodCalendar`. All under 250 lines, token-driven, responsive.
+- Log bedtime/wake, quality, interruptions.
+- Sleep score derived from duration vs goal and quality.
+- 7/30-day trend charts; personalized recommendations from recent averages.
 
-### 7. Utilities (`src/lib/health/`)
-Pure functions with types: `bmi`, `bmr`, `tdee`, `caloriesBurned`, `waterTarget`, `healthScore`, `cyclePredict`, `xpFor`, `streakFor`.
+## 6. Mental Wellness
 
-## What's intentionally NOT in v1
-Nutrition/Fitness/Sleep/Mental full features, AI model wiring, meditation library, achievements engine, reports/analytics screens, community, wearables, PWA/offline. Each gets its own follow-up pass so it's actually good, not a placeholder that looks broken.
+- Mood check-in (emoji + tags + note) with day timeline.
+- Journal CRUD with tags and search.
+- Breathing exercise (animated box-breath timer) and meditation player (interval bells).
+- Mood analytics: weekly trend, tag frequency, correlation hints.
 
-## Suggested next passes (after v1 ships)
-1. Nutrition tracker (food log + macro rings) + Fitness (workouts + calories).
-2. Mental Wellness (mood, breathing, journal) + wire AI Coach to Lovable AI Gateway.
-3. Sleep tracker + Reports (Recharts weekly/monthly).
-4. Achievements/XP engine + Community.
+## 7. Women's Health
 
-Approve to start building v1.
+- Cycle log CRUD (period start/end, flow, symptoms, hormone notes).
+- Predict next period, fertile window, current phase (using `src/lib/health.ts`).
+- Interactive calendar month view; click a day to log/inspect.
+- Symptom + hormone trend charts; insights derived from last 3 cycles.
+
+## 8. AI Coach
+
+- Local rule-based responder over user store (no LLM call): greets by name, references today's rings, suggests actions, deep-links to modules.
+- Persistent conversation history in store; new-chat/reset.
+- Quick-prompt chips ("summarize my week", "why am I tired?").
+- Voice UI: use Web Speech API (`SpeechRecognition` + `speechSynthesis`) when available, graceful fallback.
+- Generates a weekly health summary on demand from store data.
+
+## 9. Reports & Analytics
+
+- Weekly/monthly aggregators for every domain.
+- Recharts dashboards driven entirely by store.
+- Export: CSV + JSON download of selected range (`Blob` + `URL.createObjectURL`).
+
+## 10. Gamification
+
+- XP awarded on: meal log, workout complete, sleep log, mood check, journal, checklist complete.
+- Streak counter per domain, longest-streak tracking.
+- Badge catalog with unlock rules (e.g. 7-day water streak); toast on unlock.
+- Daily missions generated each morning from current gaps.
+- Local leaderboard vs simulated friends (seed data).
+
+## 11. Notifications
+
+- Notification center sheet from bell icon; read/unread + mark-all-read.
+- Reminder settings page (time-of-day per domain) persisted; scheduled via `setTimeout` while tab is open and surfaced as toasts.
+- Auto-generated notifications on badge unlocks, missed logs, streak risk.
+
+## 12. Profile & Settings
+
+- Editable profile (name, DOB, sex, height, weight, goals, avatar upload via `FileReader` → data URL).
+- Preferences: units (metric/imperial), theme (system/light/dark), women-theme toggle, reminder defaults.
+- Data controls: reset module, export all, import JSON.
+
+## 13. Auth (frontend-only polish)
+
+- Keep existing Supabase-backed auth (already working) but ensure:
+  - Post-signup → onboarding → dashboard flow is enforced.
+  - Loading + error states on every submit; disabled buttons while pending.
+  - Guarded routes already handled by `_authenticated`.
+
+## 14. UX polish
+
+- Loading skeletons per module, empty states with primary CTA, error boundary per route.
+- Form validation via Zod on every input surface.
+- Toast confirmations for create/update/delete/undo.
+- Framer Motion micro-interactions retained; no layout regressions.
+
+## Technical notes
+
+- **State**: `zustand` + `zustand/middleware` persist to `localStorage` under `arogya:<slice>`.
+- **Forms**: `react-hook-form` + `zod` (both already available via shadcn form).
+- **Charts**: `recharts` (already in deps) fed from selector hooks.
+- **Search**: `cmdk` (shadcn command).
+- **No backend writes**: existing Supabase calls in dashboard/profile stay as read-only session bootstrap; all new features are local-first. A single `src/lib/api.ts` façade wraps the store so a real backend can replace it later without UI changes.
+- **File layout**: `src/store/*.ts`, `src/features/<domain>/`, `src/components/<domain>/` for domain widgets; routes stay thin.
+
+## Rollout order
+
+1. Store scaffolding + seed + selectors + shared UI primitives.
+2. Dashboard wired to live store; checklist interactive; search + notifications shell.
+3. Nutrition → Fitness → Sleep → Mental → Women's (each: CRUD, charts, XP hooks).
+4. AI Coach logic + voice.
+5. Reports/export, gamification unlocks, notifications engine.
+6. Profile/settings + preferences + import/export.
+7. Empty/loading/error pass and validation sweep.
