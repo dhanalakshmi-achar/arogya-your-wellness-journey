@@ -1,4 +1,4 @@
-import type { AppState } from "@/store/app";
+import type { useApp as _useApp } from "@/store/app";
 
 type Store = ReturnType<typeof import("@/store/app").useApp.getState>;
 
@@ -62,4 +62,4 @@ const daysAgo = (n: number) => {
   return d.toISOString().slice(0, 10);
 };
 const avg = (a: number[]) => (a.length ? a.reduce((x, y) => x + y, 0) / a.length : 0);
-export type _AppState = AppState;
+export type _Unused = typeof _useApp;
