@@ -19,7 +19,7 @@ export async function loadProfileFromSupabase(
     .from("profiles")
     .select("full_name, avatar_url, date_of_birth, height_cm, weight_kg, sex, goal, units")
     .eq("id", user.user.id)
-    .single();
+.maybeSingle();
 
   if (error || !data) return;
 

@@ -9,7 +9,8 @@ export const Route = createFileRoute("/_authenticated/women/insights")({
 
 function Insights() {
   const cycles = useApp((s) => s.cycles);
-  const moods = useApp((s) => s.moods.filter((m) => m.tags.includes("cycle")));
+  const allMoods = useApp((s) => s.moods);
+const moods = allMoods.filter((m) => m.tags.includes("cycle"));
   const avgMood = moods.length ? (moods.reduce((a, b) => a + b.mood, 0) / moods.length).toFixed(1) : "—";
   const commonSyms: Record<string, number> = {};
   cycles.forEach((c) => c.symptoms.forEach((s) => { commonSyms[s] = (commonSyms[s] || 0) + 1; }));
