@@ -25,7 +25,7 @@ export function SideNav() {
       <Link to="/dashboard" className="flex items-center gap-2 px-2">
        <div className="grid h-10 w-10 place-items-center overflow-hidden rounded-2xl">
   <img
-    src="public/arogya.png"
+    src="/arogya.png"
     alt="Arogya Logo"
     className="h-full w-full object-contain"
   />
