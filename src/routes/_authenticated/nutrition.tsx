@@ -18,15 +18,105 @@ export const Route = createFileRoute("/_authenticated/nutrition")({
   component: NutritionPage,
 });
 
-const FOOD_LIBRARY: Array<Omit<Meal, "id" | "date" | "time" | "type">> = [
-  { name: "Oatmeal + berries", calories: 320, protein: 10, carbs: 55, fat: 7 },
-  { name: "Chicken salad", calories: 450, protein: 40, carbs: 20, fat: 22 },
-  { name: "Salmon + quinoa", calories: 580, protein: 42, carbs: 45, fat: 22 },
-  { name: "Greek yogurt + honey", calories: 220, protein: 18, carbs: 24, fat: 5 },
-  { name: "Avocado toast", calories: 380, protein: 12, carbs: 40, fat: 20 },
-  { name: "Protein shake", calories: 180, protein: 25, carbs: 8, fat: 4 },
-  { name: "Vegetable curry", calories: 420, protein: 15, carbs: 55, fat: 15 },
-  { name: "Apple + peanut butter", calories: 250, protein: 6, carbs: 30, fat: 12 },
+type FoodItem = Omit<Meal, "id" | "date" | "time" | "type"> & { category: string };
+
+const FOOD_LIBRARY: FoodItem[] = [
+  // ── Breakfast ──────────────────────────────────────────────────────────
+  { name: "Oatmeal + berries",       calories: 320, protein: 10, carbs: 55, fat:  7, category: "Breakfast" },
+  { name: "Avocado toast",            calories: 380, protein: 12, carbs: 40, fat: 20, category: "Breakfast" },
+  { name: "Greek yogurt + honey",     calories: 220, protein: 18, carbs: 24, fat:  5, category: "Breakfast" },
+  { name: "Scrambled eggs",           calories: 220, protein: 15, carbs:  2, fat: 16, category: "Breakfast" },
+  { name: "Banana pancakes",          calories: 340, protein:  8, carbs: 58, fat:  9, category: "Breakfast" },
+  { name: "Whole wheat toast + eggs", calories: 310, protein: 18, carbs: 32, fat: 11, category: "Breakfast" },
+  { name: "Muesli + milk",            calories: 360, protein: 12, carbs: 60, fat:  8, category: "Breakfast" },
+  { name: "Smoothie bowl",            calories: 290, protein:  8, carbs: 52, fat:  6, category: "Breakfast" },
+  { name: "Boiled eggs (2)",          calories: 155, protein: 13, carbs:  1, fat: 11, category: "Breakfast" },
+  { name: "Peanut butter toast",      calories: 350, protein: 12, carbs: 38, fat: 16, category: "Breakfast" },
+
+  // ── Indian ─────────────────────────────────────────────────────────────
+  { name: "Dal Tadka",          calories: 220, protein: 12, carbs: 32, fat:  6, category: "Indian" },
+  { name: "Dal Makhani",        calories: 310, protein: 14, carbs: 36, fat: 12, category: "Indian" },
+  { name: "Red Lentil Dal",     calories: 200, protein: 13, carbs: 30, fat:  4, category: "Indian" },
+  { name: "Roti (1 piece)",     calories:  80, protein:  3, carbs: 16, fat:  1, category: "Indian" },
+  { name: "Chapati (1 piece)",  calories:  70, protein:  2, carbs: 15, fat:  1, category: "Indian" },
+  { name: "Paratha (1 piece)",  calories: 180, protein:  4, carbs: 25, fat:  7, category: "Indian" },
+  { name: "Plain Rice (1 cup)", calories: 200, protein:  4, carbs: 44, fat:  0, category: "Indian" },
+  { name: "Jeera Rice",         calories: 230, protein:  4, carbs: 46, fat:  4, category: "Indian" },
+  { name: "Chicken Biryani",    calories: 490, protein: 28, carbs: 58, fat: 16, category: "Indian" },
+  { name: "Veg Biryani",        calories: 380, protein: 10, carbs: 62, fat:  9, category: "Indian" },
+  { name: "Paneer Tikka",       calories: 260, protein: 18, carbs:  8, fat: 18, category: "Indian" },
+  { name: "Palak Paneer",       calories: 280, protein: 15, carbs: 12, fat: 18, category: "Indian" },
+  { name: "Paneer Bhurji",      calories: 250, protein: 14, carbs:  8, fat: 18, category: "Indian" },
+  { name: "Chole (Chickpea curry)", calories: 300, protein: 14, carbs: 42, fat:  8, category: "Indian" },
+  { name: "Rajma",              calories: 280, protein: 13, carbs: 44, fat:  5, category: "Indian" },
+  { name: "Idli (2 pieces)",    calories: 140, protein:  4, carbs: 28, fat:  1, category: "Indian" },
+  { name: "Masala Dosa",        calories: 340, protein:  7, carbs: 55, fat: 10, category: "Indian" },
+  { name: "Plain Dosa",         calories: 180, protein:  4, carbs: 34, fat:  4, category: "Indian" },
+  { name: "Sambar (1 cup)",     calories: 130, protein:  7, carbs: 18, fat:  4, category: "Indian" },
+  { name: "Upma",               calories: 250, protein:  6, carbs: 40, fat:  7, category: "Indian" },
+  { name: "Poha",               calories: 240, protein:  5, carbs: 44, fat:  5, category: "Indian" },
+  { name: "Khichdi",            calories: 280, protein: 10, carbs: 48, fat:  5, category: "Indian" },
+  { name: "Aloo Gobi",          calories: 200, protein:  5, carbs: 30, fat:  7, category: "Indian" },
+  { name: "Bhindi Masala",      calories: 180, protein:  4, carbs: 18, fat: 10, category: "Indian" },
+  { name: "Raita (1 cup)",      calories: 100, protein:  5, carbs:  8, fat:  5, category: "Indian" },
+  { name: "Sweet Lassi",        calories: 200, protein:  7, carbs: 32, fat:  5, category: "Indian" },
+  { name: "Pav Bhaji",          calories: 420, protein: 10, carbs: 62, fat: 14, category: "Indian" },
+  { name: "Vegetable curry",    calories: 220, protein:  6, carbs: 28, fat: 10, category: "Indian" },
+
+  // ── Protein ────────────────────────────────────────────────────────────
+  { name: "Grilled chicken breast",  calories: 165, protein: 31, carbs:  0, fat:  4, category: "Protein" },
+  { name: "Boiled chicken (100 g)",  calories: 150, protein: 28, carbs:  0, fat:  3, category: "Protein" },
+  { name: "Salmon fillet",           calories: 208, protein: 28, carbs:  0, fat: 10, category: "Protein" },
+  { name: "Tuna (canned, 100 g)",    calories: 110, protein: 25, carbs:  0, fat:  1, category: "Protein" },
+  { name: "Eggs (2 whole)",          calories: 155, protein: 13, carbs:  1, fat: 11, category: "Protein" },
+  { name: "Egg whites (3)",          calories:  52, protein: 11, carbs:  1, fat:  0, category: "Protein" },
+  { name: "Paneer (100 g)",          calories: 265, protein: 18, carbs:  3, fat: 20, category: "Protein" },
+  { name: "Tofu (100 g)",            calories:  76, protein:  8, carbs:  2, fat:  4, category: "Protein" },
+  { name: "Protein shake",           calories: 180, protein: 25, carbs:  8, fat:  4, category: "Protein" },
+  { name: "Whey + banana",           calories: 280, protein: 28, carbs: 34, fat:  3, category: "Protein" },
+  { name: "Boiled lentils (1 cup)",  calories: 230, protein: 18, carbs: 40, fat:  1, category: "Protein" },
+  { name: "Cottage cheese (100 g)",  calories:  98, protein: 11, carbs:  3, fat:  4, category: "Protein" },
+  { name: "Greek yogurt (plain)",    calories: 100, protein: 17, carbs:  6, fat:  0, category: "Protein" },
+
+  // ── Snack ──────────────────────────────────────────────────────────────
+  { name: "Apple + peanut butter",  calories: 250, protein:  6, carbs: 30, fat: 12, category: "Snack" },
+  { name: "Mixed nuts (30 g)",       calories: 180, protein:  5, carbs:  6, fat: 16, category: "Snack" },
+  { name: "Rice cakes (2)",          calories:  70, protein:  1, carbs: 15, fat:  0, category: "Snack" },
+  { name: "Hummus + veggies",        calories: 180, protein:  6, carbs: 20, fat:  8, category: "Snack" },
+  { name: "Dark chocolate (30 g)",   calories: 170, protein:  2, carbs: 18, fat: 10, category: "Snack" },
+  { name: "Protein bar",             calories: 210, protein: 20, carbs: 22, fat:  7, category: "Snack" },
+  { name: "Banana",                  calories:  89, protein:  1, carbs: 23, fat:  0, category: "Snack" },
+  { name: "Trail mix (40 g)",        calories: 200, protein:  5, carbs: 22, fat: 11, category: "Snack" },
+  { name: "String cheese",           calories:  80, protein:  7, carbs:  1, fat:  5, category: "Snack" },
+  { name: "Roasted chickpeas",       calories: 120, protein:  5, carbs: 18, fat:  3, category: "Snack" },
+
+  // ── Lunch/Dinner ───────────────────────────────────────────────────────
+  { name: "Chicken salad",           calories: 350, protein: 35, carbs: 12, fat: 18, category: "Lunch/Dinner" },
+  { name: "Salmon + quinoa",         calories: 520, protein: 42, carbs: 45, fat: 16, category: "Lunch/Dinner" },
+  { name: "Pasta Bolognese",         calories: 520, protein: 28, carbs: 62, fat: 16, category: "Lunch/Dinner" },
+  { name: "Grilled fish + rice",     calories: 420, protein: 36, carbs: 45, fat:  8, category: "Lunch/Dinner" },
+  { name: "Veggie stir-fry + rice",  calories: 380, protein: 10, carbs: 60, fat:  9, category: "Lunch/Dinner" },
+  { name: "Chicken wrap",            calories: 440, protein: 32, carbs: 42, fat: 14, category: "Lunch/Dinner" },
+  { name: "Lentil soup",             calories: 250, protein: 15, carbs: 38, fat:  4, category: "Lunch/Dinner" },
+  { name: "Caesar salad",            calories: 300, protein: 12, carbs: 18, fat: 20, category: "Lunch/Dinner" },
+  { name: "Beef burger",             calories: 550, protein: 30, carbs: 44, fat: 26, category: "Lunch/Dinner" },
+  { name: "Grilled veggies + hummus",calories: 280, protein:  8, carbs: 34, fat: 12, category: "Lunch/Dinner" },
+  { name: "Mac and cheese",          calories: 490, protein: 16, carbs: 68, fat: 18, category: "Lunch/Dinner" },
+  { name: "Minestrone soup",         calories: 200, protein:  8, carbs: 32, fat:  4, category: "Lunch/Dinner" },
+
+  // ── Fruit / Veg ────────────────────────────────────────────────────────
+  { name: "Apple",             calories:  52, protein:  0, carbs: 14, fat:  0, category: "Fruit/Veg" },
+  { name: "Banana",            calories:  89, protein:  1, carbs: 23, fat:  0, category: "Fruit/Veg" },
+  { name: "Orange",            calories:  47, protein:  1, carbs: 12, fat:  0, category: "Fruit/Veg" },
+  { name: "Mango (1 cup)",     calories:  99, protein:  1, carbs: 25, fat:  1, category: "Fruit/Veg" },
+  { name: "Watermelon (2 cups)",calories:  86, protein:  2, carbs: 22, fat:  0, category: "Fruit/Veg" },
+  { name: "Mixed berries",     calories:  70, protein:  1, carbs: 17, fat:  1, category: "Fruit/Veg" },
+  { name: "Spinach salad",     calories:  30, protein:  3, carbs:  4, fat:  0, category: "Fruit/Veg" },
+  { name: "Broccoli (1 cup)",  calories:  55, protein:  4, carbs: 11, fat:  1, category: "Fruit/Veg" },
+  { name: "Carrot sticks",     calories:  52, protein:  1, carbs: 12, fat:  0, category: "Fruit/Veg" },
+  { name: "Avocado (half)",    calories: 120, protein:  1, carbs:  6, fat: 11, category: "Fruit/Veg" },
+  { name: "Sweet potato",      calories: 103, protein:  2, carbs: 24, fat:  0, category: "Fruit/Veg" },
+  { name: "Corn on the cob",   calories:  77, protein:  3, carbs: 17, fat:  1, category: "Fruit/Veg" },
 ];
 
 function NutritionPage() {
@@ -171,6 +261,8 @@ function AddMealDialog() {
   const [carbs, setCarbs] = useState<number | "">("");
   const [fat, setFat] = useState<number | "">("");
   const [query, setQuery] = useState("");
+  const [cat, setCat] = useState("All");
+  const CATS = ["All", "Breakfast", "Indian", "Protein", "Snack", "Lunch/Dinner", "Fruit/Veg"];
 
   const submit = () => {
     if (!name.trim() || !calories) { toast.error("Name and calories are required"); return; }
@@ -194,14 +286,17 @@ function AddMealDialog() {
     setName(f.name); setCalories(f.calories); setProtein(f.protein); setCarbs(f.carbs); setFat(f.fat);
   };
 
-  const filtered = FOOD_LIBRARY.filter((f) => f.name.toLowerCase().includes(query.toLowerCase()));
+  const filtered = FOOD_LIBRARY.filter((f) =>
+    (cat === "All" || f.category === cat) &&
+    f.name.toLowerCase().includes(query.toLowerCase())
+  );
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button className="rounded-2xl"><Plus className="mr-1 h-4 w-4" /> Add meal</Button>
       </DialogTrigger>
-      <DialogContent className="max-w-md">
+      <DialogContent className="w-[95vw] max-w-2xl rounded-3xl p-6">
         <DialogHeader><DialogTitle>Log a meal</DialogTitle></DialogHeader>
         <div className="space-y-3">
           <div className="grid grid-cols-4 gap-1 rounded-2xl bg-muted p-1">
@@ -217,9 +312,24 @@ function AddMealDialog() {
           </div>
           <div>
             <Label>Quick pick</Label>
-            <Input placeholder="Search foods…" value={query} onChange={(e) => setQuery(e.target.value)} className="mt-1 rounded-2xl" />
+            <div className="mt-1 flex gap-1 overflow-x-auto pb-1">
+              {CATS.map((c) => (
+                <button
+                  key={c}
+                  onClick={() => setCat(c)}
+                  className={`shrink-0 rounded-full border px-3 py-1 text-xs font-medium transition-colors ${
+                    cat === c
+                      ? "border-primary bg-primary text-primary-foreground"
+                      : "bg-background text-muted-foreground hover:border-primary"
+                  }`}
+                >
+                  {c}
+                </button>
+              ))}
+            </div>
+            <Input placeholder="Search foods…" value={query} onChange={(e) => setQuery(e.target.value)} className="mt-2 rounded-2xl" />
             <div className="mt-2 flex flex-wrap gap-1">
-              {filtered.slice(0, 6).map((f) => (
+              {filtered.slice(0, 8).map((f) => (
                 <button key={f.name} onClick={() => pick(f)} className="rounded-full border bg-background px-3 py-1 text-xs hover:border-primary">
                   {f.name}
                 </button>

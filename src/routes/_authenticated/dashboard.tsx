@@ -1,5 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useEffect } from "react";
+import { useEffect, useMemo, useState } from "react";
+
+// import { useEffect } from "react";
 import { motion } from "framer-motion";
 import { Apple, Dumbbell, Moon, Brain, Droplets, Flame, Footprints, Sparkles, Check, Trash2, Plus } from "lucide-react";
 import { ProgressRing } from "@/components/health/ProgressRing";
@@ -12,7 +14,7 @@ import { useToday } from "@/lib/derive";
 import { levelFromXp } from "@/lib/health";
 import { NotificationBell } from "@/components/layout/NotificationBell";
 import { CommandPalette } from "@/components/layout/CommandPalette";
-import { useState } from "react";
+// import { useState } from "react";
 
 export const Route = createFileRoute("/_authenticated/dashboard")({
   head: () => ({
@@ -30,11 +32,21 @@ function Dashboard() {
   const xp = useApp((s) => s.xp);
   const streaks = useApp((s) => s.streaks);
   const seed = useApp((s) => s.seedChecklistIfEmpty);
-  const checklist = useApp((s) => s.checklist.filter((c) => c.date === new Date().toISOString().slice(0, 10)));
-  const toggle = useApp((s) => s.toggleChecklistItem);
-  const removeItem = useApp((s) => s.removeChecklistItem);
-  const addItem = useApp((s) => s.addChecklistItem);
-  const t = useToday();
+  const allChecklist = useApp((s) => s.checklist);
+const today = new Date().toISOString().slice(0, 10);
+
+const checklist = useMemo(() => {
+  return allChecklist.filter((c) => c.date === today);
+}, [allChecklist]);
+
+const toggle = useApp((s) => s.toggleChecklistItem);
+const removeItem = useApp((s) => s.removeChecklistItem);
+const addItem = useApp((s) => s.addChecklistItem);
+const t = useToday();
+const stepLog = useApp((s) => s.stepLog);
+
+const todaySteps =
+  stepLog.find((s) => s.date === today)?.steps ?? 0;
   const [newTask, setNewTask] = useState("");
 
   useEffect(() => { seed(); }, [seed]);
@@ -120,10 +132,11 @@ function Dashboard() {
         </div>
       </section>
 
-      <section className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+      <section className="grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
         <StatCard icon={Flame} label="Calories out" value={<span>{t.caloriesOut}</span>} hint={`${t.workouts.length} workout${t.workouts.length === 1 ? "" : "s"}`} accent="var(--color-warning)" />
         <StatCard icon={Droplets} label="Hydration" value={<span>{(t.water / 1000).toFixed(1)}L</span>} hint={`${Math.round((t.water / targets.waterMl) * 100)}% of goal`} accent="var(--color-info)" />
-        <StatCard icon={Footprints} label="Meals" value={<span>{t.meals.length}</span>} hint={`${Math.round(t.totals.protein)}g protein`} accent="var(--color-primary)" />
+        <StatCard icon={Apple} label="Meals" value={<span>{t.meals.length}</span>} hint={`${Math.round(t.totals.protein)}g protein`} accent="var(--color-primary)" />
+        <StatCard icon={Footprints} label="Steps" value={<span>{todaySteps.toLocaleString()}</span>} hint={`${Math.round((todaySteps / targets.steps) * 100)}% of goal`} accent="var(--color-success)" />
         <StatCard icon={Brain} label="Mood" value={<span>{t.mood?.emoji ?? "—"}</span>} hint={t.mood ? new Date(t.mood.at).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }) : "Not logged"} accent="var(--color-accent)" />
       </section>
 

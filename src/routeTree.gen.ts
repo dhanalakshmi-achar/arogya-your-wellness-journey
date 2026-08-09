@@ -9,114 +9,45 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as AuthRouteImport } from './routes/auth'
-import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as AuthenticatedSleepRouteImport } from './routes/_authenticated/sleep'
-import { Route as AuthenticatedReportsRouteImport } from './routes/_authenticated/reports'
-import { Route as AuthenticatedProfileRouteImport } from './routes/_authenticated/profile'
-import { Route as AuthenticatedOnboardingRouteImport } from './routes/_authenticated/onboarding'
-import { Route as AuthenticatedNutritionRouteImport } from './routes/_authenticated/nutrition'
-import { Route as AuthenticatedMentalRouteImport } from './routes/_authenticated/mental'
-import { Route as AuthenticatedFitnessRouteImport } from './routes/_authenticated/fitness'
-import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
-import { Route as AuthenticatedAiCoachRouteImport } from './routes/_authenticated/ai-coach'
+import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
+import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AuthenticatedAchievementsRouteImport } from './routes/_authenticated/achievements'
 import { Route as AuthenticatedAdminRouteRouteImport } from './routes/_authenticated/admin/route'
+import { Route as AuthenticatedAiCoachRouteImport } from './routes/_authenticated/ai-coach'
+import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
+import { Route as AuthenticatedFitnessRouteImport } from './routes/_authenticated/fitness'
+import { Route as AuthenticatedMentalRouteImport } from './routes/_authenticated/mental'
+import { Route as AuthenticatedNutritionRouteImport } from './routes/_authenticated/nutrition'
+import { Route as AuthenticatedOnboardingRouteImport } from './routes/_authenticated/onboarding'
+import { Route as AuthenticatedProfileRouteImport } from './routes/_authenticated/profile'
+import { Route as AuthenticatedProgramsRouteImport } from './routes/_authenticated/programs'
+import { Route as AuthenticatedReportsRouteImport } from './routes/_authenticated/reports'
+import { Route as AuthenticatedSleepRouteImport } from './routes/_authenticated/sleep'
+import { Route as AuthenticatedWomenRouteRouteImport } from './routes/_authenticated/women/route'
 import { Route as AuthenticatedAdminIndexRouteImport } from './routes/_authenticated/admin/index'
-import { Route as AuthenticatedAdminUsersRouteImport } from './routes/_authenticated/admin/users'
 import { Route as AuthenticatedAdminActivityRouteImport } from './routes/_authenticated/admin/activity'
 import { Route as AuthenticatedAdminHealthOverviewRouteImport } from './routes/_authenticated/admin/health-overview'
-import { Route as AuthenticatedWomenRouteRouteImport } from './routes/_authenticated/women/route'
+import { Route as AuthenticatedAdminUsersRouteImport } from './routes/_authenticated/admin/users'
 import { Route as AuthenticatedWomenIndexRouteImport } from './routes/_authenticated/women/index'
-import { Route as AuthenticatedWomenPregnancyRouteImport } from './routes/_authenticated/women/pregnancy'
-import { Route as AuthenticatedWomenInsightsRouteImport } from './routes/_authenticated/women/insights'
-import { Route as AuthenticatedWomenHormonesRouteImport } from './routes/_authenticated/women/hormones'
 import { Route as AuthenticatedWomenCalendarRouteImport } from './routes/_authenticated/women/calendar'
+import { Route as AuthenticatedWomenHormonesRouteImport } from './routes/_authenticated/women/hormones'
+import { Route as AuthenticatedWomenInsightsRouteImport } from './routes/_authenticated/women/insights'
+import { Route as AuthenticatedWomenPregnancyRouteImport } from './routes/_authenticated/women/pregnancy'
 
-const AuthRoute = AuthRouteImport.update({
-  id: '/auth',
-  path: '/auth',
+const IndexRoute = IndexRouteImport.update({
+  id: '/',
+  path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
   id: '/_authenticated',
   getParentRoute: () => rootRouteImport,
 } as any)
-const IndexRoute = IndexRouteImport.update({
-  id: '/',
-  path: '/',
+const AuthRoute = AuthRouteImport.update({
+  id: '/auth',
+  path: '/auth',
   getParentRoute: () => rootRouteImport,
-} as any)
-const AuthenticatedAdminRouteRoute = AuthenticatedAdminRouteRouteImport.update({
-  id: '/admin',
-  path: '/admin',
-  getParentRoute: () => AuthenticatedRouteRoute,
-} as any)
-const AuthenticatedAdminIndexRoute = AuthenticatedAdminIndexRouteImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => AuthenticatedAdminRouteRoute,
-} as any)
-const AuthenticatedAdminUsersRoute = AuthenticatedAdminUsersRouteImport.update({
-  id: '/users',
-  path: '/users',
-  getParentRoute: () => AuthenticatedAdminRouteRoute,
-} as any)
-const AuthenticatedAdminActivityRoute = AuthenticatedAdminActivityRouteImport.update({
-  id: '/activity',
-  path: '/activity',
-  getParentRoute: () => AuthenticatedAdminRouteRoute,
-} as any)
-const AuthenticatedAdminHealthOverviewRoute = AuthenticatedAdminHealthOverviewRouteImport.update({
-  id: '/health-overview',
-  path: '/health-overview',
-  getParentRoute: () => AuthenticatedAdminRouteRoute,
-} as any)
-const AuthenticatedSleepRoute = AuthenticatedSleepRouteImport.update({
-  id: '/sleep',
-  path: '/sleep',
-  getParentRoute: () => AuthenticatedRouteRoute,
-} as any)
-const AuthenticatedReportsRoute = AuthenticatedReportsRouteImport.update({
-  id: '/reports',
-  path: '/reports',
-  getParentRoute: () => AuthenticatedRouteRoute,
-} as any)
-const AuthenticatedProfileRoute = AuthenticatedProfileRouteImport.update({
-  id: '/profile',
-  path: '/profile',
-  getParentRoute: () => AuthenticatedRouteRoute,
-} as any)
-const AuthenticatedOnboardingRoute = AuthenticatedOnboardingRouteImport.update({
-  id: '/onboarding',
-  path: '/onboarding',
-  getParentRoute: () => AuthenticatedRouteRoute,
-} as any)
-const AuthenticatedNutritionRoute = AuthenticatedNutritionRouteImport.update({
-  id: '/nutrition',
-  path: '/nutrition',
-  getParentRoute: () => AuthenticatedRouteRoute,
-} as any)
-const AuthenticatedMentalRoute = AuthenticatedMentalRouteImport.update({
-  id: '/mental',
-  path: '/mental',
-  getParentRoute: () => AuthenticatedRouteRoute,
-} as any)
-const AuthenticatedFitnessRoute = AuthenticatedFitnessRouteImport.update({
-  id: '/fitness',
-  path: '/fitness',
-  getParentRoute: () => AuthenticatedRouteRoute,
-} as any)
-const AuthenticatedDashboardRoute = AuthenticatedDashboardRouteImport.update({
-  id: '/dashboard',
-  path: '/dashboard',
-  getParentRoute: () => AuthenticatedRouteRoute,
-} as any)
-const AuthenticatedAiCoachRoute = AuthenticatedAiCoachRouteImport.update({
-  id: '/ai-coach',
-  path: '/ai-coach',
-  getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
 const AuthenticatedAchievementsRoute =
   AuthenticatedAchievementsRouteImport.update({
@@ -124,26 +55,97 @@ const AuthenticatedAchievementsRoute =
     path: '/achievements',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
+const AuthenticatedAdminRouteRoute = AuthenticatedAdminRouteRouteImport.update({
+  id: '/admin',
+  path: '/admin',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedAiCoachRoute = AuthenticatedAiCoachRouteImport.update({
+  id: '/ai-coach',
+  path: '/ai-coach',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedDashboardRoute = AuthenticatedDashboardRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedFitnessRoute = AuthenticatedFitnessRouteImport.update({
+  id: '/fitness',
+  path: '/fitness',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedMentalRoute = AuthenticatedMentalRouteImport.update({
+  id: '/mental',
+  path: '/mental',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedNutritionRoute = AuthenticatedNutritionRouteImport.update({
+  id: '/nutrition',
+  path: '/nutrition',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedOnboardingRoute = AuthenticatedOnboardingRouteImport.update({
+  id: '/onboarding',
+  path: '/onboarding',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedProfileRoute = AuthenticatedProfileRouteImport.update({
+  id: '/profile',
+  path: '/profile',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedProgramsRoute = AuthenticatedProgramsRouteImport.update({
+  id: '/programs',
+  path: '/programs',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedReportsRoute = AuthenticatedReportsRouteImport.update({
+  id: '/reports',
+  path: '/reports',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedSleepRoute = AuthenticatedSleepRouteImport.update({
+  id: '/sleep',
+  path: '/sleep',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 const AuthenticatedWomenRouteRoute = AuthenticatedWomenRouteRouteImport.update({
   id: '/women',
   path: '/women',
   getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedAdminIndexRoute = AuthenticatedAdminIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AuthenticatedAdminRouteRoute,
+} as any)
+const AuthenticatedAdminActivityRoute =
+  AuthenticatedAdminActivityRouteImport.update({
+    id: '/activity',
+    path: '/activity',
+    getParentRoute: () => AuthenticatedAdminRouteRoute,
+  } as any)
+const AuthenticatedAdminHealthOverviewRoute =
+  AuthenticatedAdminHealthOverviewRouteImport.update({
+    id: '/health-overview',
+    path: '/health-overview',
+    getParentRoute: () => AuthenticatedAdminRouteRoute,
+  } as any)
+const AuthenticatedAdminUsersRoute = AuthenticatedAdminUsersRouteImport.update({
+  id: '/users',
+  path: '/users',
+  getParentRoute: () => AuthenticatedAdminRouteRoute,
 } as any)
 const AuthenticatedWomenIndexRoute = AuthenticatedWomenIndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => AuthenticatedWomenRouteRoute,
 } as any)
-const AuthenticatedWomenPregnancyRoute =
-  AuthenticatedWomenPregnancyRouteImport.update({
-    id: '/pregnancy',
-    path: '/pregnancy',
-    getParentRoute: () => AuthenticatedWomenRouteRoute,
-  } as any)
-const AuthenticatedWomenInsightsRoute =
-  AuthenticatedWomenInsightsRouteImport.update({
-    id: '/insights',
-    path: '/insights',
+const AuthenticatedWomenCalendarRoute =
+  AuthenticatedWomenCalendarRouteImport.update({
+    id: '/calendar',
+    path: '/calendar',
     getParentRoute: () => AuthenticatedWomenRouteRoute,
   } as any)
 const AuthenticatedWomenHormonesRoute =
@@ -152,10 +154,16 @@ const AuthenticatedWomenHormonesRoute =
     path: '/hormones',
     getParentRoute: () => AuthenticatedWomenRouteRoute,
   } as any)
-const AuthenticatedWomenCalendarRoute =
-  AuthenticatedWomenCalendarRouteImport.update({
-    id: '/calendar',
-    path: '/calendar',
+const AuthenticatedWomenInsightsRoute =
+  AuthenticatedWomenInsightsRouteImport.update({
+    id: '/insights',
+    path: '/insights',
+    getParentRoute: () => AuthenticatedWomenRouteRoute,
+  } as any)
+const AuthenticatedWomenPregnancyRoute =
+  AuthenticatedWomenPregnancyRouteImport.update({
+    id: '/pregnancy',
+    path: '/pregnancy',
     getParentRoute: () => AuthenticatedWomenRouteRoute,
   } as any)
 
@@ -163,10 +171,6 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/admin': typeof AuthenticatedAdminRouteRouteWithChildren
-  '/admin/': typeof AuthenticatedAdminIndexRoute
-  '/admin/users': typeof AuthenticatedAdminUsersRoute
-  '/admin/activity': typeof AuthenticatedAdminActivityRoute
-  '/admin/health-overview': typeof AuthenticatedAdminHealthOverviewRoute
   '/women': typeof AuthenticatedWomenRouteRouteWithChildren
   '/achievements': typeof AuthenticatedAchievementsRoute
   '/ai-coach': typeof AuthenticatedAiCoachRoute
@@ -176,21 +180,22 @@ export interface FileRoutesByFullPath {
   '/nutrition': typeof AuthenticatedNutritionRoute
   '/onboarding': typeof AuthenticatedOnboardingRoute
   '/profile': typeof AuthenticatedProfileRoute
+  '/programs': typeof AuthenticatedProgramsRoute
   '/reports': typeof AuthenticatedReportsRoute
   '/sleep': typeof AuthenticatedSleepRoute
+  '/admin/activity': typeof AuthenticatedAdminActivityRoute
+  '/admin/health-overview': typeof AuthenticatedAdminHealthOverviewRoute
+  '/admin/users': typeof AuthenticatedAdminUsersRoute
   '/women/calendar': typeof AuthenticatedWomenCalendarRoute
   '/women/hormones': typeof AuthenticatedWomenHormonesRoute
   '/women/insights': typeof AuthenticatedWomenInsightsRoute
   '/women/pregnancy': typeof AuthenticatedWomenPregnancyRoute
+  '/admin/': typeof AuthenticatedAdminIndexRoute
   '/women/': typeof AuthenticatedWomenIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
-  '/admin': typeof AuthenticatedAdminIndexRoute
-  '/admin/users': typeof AuthenticatedAdminUsersRoute
-  '/admin/activity': typeof AuthenticatedAdminActivityRoute
-  '/admin/health-overview': typeof AuthenticatedAdminHealthOverviewRoute
   '/achievements': typeof AuthenticatedAchievementsRoute
   '/ai-coach': typeof AuthenticatedAiCoachRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
@@ -199,12 +204,17 @@ export interface FileRoutesByTo {
   '/nutrition': typeof AuthenticatedNutritionRoute
   '/onboarding': typeof AuthenticatedOnboardingRoute
   '/profile': typeof AuthenticatedProfileRoute
+  '/programs': typeof AuthenticatedProgramsRoute
   '/reports': typeof AuthenticatedReportsRoute
   '/sleep': typeof AuthenticatedSleepRoute
+  '/admin/activity': typeof AuthenticatedAdminActivityRoute
+  '/admin/health-overview': typeof AuthenticatedAdminHealthOverviewRoute
+  '/admin/users': typeof AuthenticatedAdminUsersRoute
   '/women/calendar': typeof AuthenticatedWomenCalendarRoute
   '/women/hormones': typeof AuthenticatedWomenHormonesRoute
   '/women/insights': typeof AuthenticatedWomenInsightsRoute
   '/women/pregnancy': typeof AuthenticatedWomenPregnancyRoute
+  '/admin': typeof AuthenticatedAdminIndexRoute
   '/women': typeof AuthenticatedWomenIndexRoute
 }
 export interface FileRoutesById {
@@ -213,10 +223,6 @@ export interface FileRoutesById {
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/auth': typeof AuthRoute
   '/_authenticated/admin': typeof AuthenticatedAdminRouteRouteWithChildren
-  '/_authenticated/admin/': typeof AuthenticatedAdminIndexRoute
-  '/_authenticated/admin/users': typeof AuthenticatedAdminUsersRoute
-  '/_authenticated/admin/activity': typeof AuthenticatedAdminActivityRoute
-  '/_authenticated/admin/health-overview': typeof AuthenticatedAdminHealthOverviewRoute
   '/_authenticated/women': typeof AuthenticatedWomenRouteRouteWithChildren
   '/_authenticated/achievements': typeof AuthenticatedAchievementsRoute
   '/_authenticated/ai-coach': typeof AuthenticatedAiCoachRoute
@@ -226,12 +232,17 @@ export interface FileRoutesById {
   '/_authenticated/nutrition': typeof AuthenticatedNutritionRoute
   '/_authenticated/onboarding': typeof AuthenticatedOnboardingRoute
   '/_authenticated/profile': typeof AuthenticatedProfileRoute
+  '/_authenticated/programs': typeof AuthenticatedProgramsRoute
   '/_authenticated/reports': typeof AuthenticatedReportsRoute
   '/_authenticated/sleep': typeof AuthenticatedSleepRoute
+  '/_authenticated/admin/activity': typeof AuthenticatedAdminActivityRoute
+  '/_authenticated/admin/health-overview': typeof AuthenticatedAdminHealthOverviewRoute
+  '/_authenticated/admin/users': typeof AuthenticatedAdminUsersRoute
   '/_authenticated/women/calendar': typeof AuthenticatedWomenCalendarRoute
   '/_authenticated/women/hormones': typeof AuthenticatedWomenHormonesRoute
   '/_authenticated/women/insights': typeof AuthenticatedWomenInsightsRoute
   '/_authenticated/women/pregnancy': typeof AuthenticatedWomenPregnancyRoute
+  '/_authenticated/admin/': typeof AuthenticatedAdminIndexRoute
   '/_authenticated/women/': typeof AuthenticatedWomenIndexRoute
 }
 export interface FileRouteTypes {
@@ -240,10 +251,6 @@ export interface FileRouteTypes {
     | '/'
     | '/auth'
     | '/admin'
-    | '/admin/'
-    | '/admin/users'
-    | '/admin/activity'
-    | '/admin/health-overview'
     | '/women'
     | '/achievements'
     | '/ai-coach'
@@ -253,21 +260,22 @@ export interface FileRouteTypes {
     | '/nutrition'
     | '/onboarding'
     | '/profile'
+    | '/programs'
     | '/reports'
     | '/sleep'
+    | '/admin/activity'
+    | '/admin/health-overview'
+    | '/admin/users'
     | '/women/calendar'
     | '/women/hormones'
     | '/women/insights'
     | '/women/pregnancy'
+    | '/admin/'
     | '/women/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/auth'
-    | '/admin'
-    | '/admin/users'
-    | '/admin/activity'
-    | '/admin/health-overview'
     | '/achievements'
     | '/ai-coach'
     | '/dashboard'
@@ -276,12 +284,17 @@ export interface FileRouteTypes {
     | '/nutrition'
     | '/onboarding'
     | '/profile'
+    | '/programs'
     | '/reports'
     | '/sleep'
+    | '/admin/activity'
+    | '/admin/health-overview'
+    | '/admin/users'
     | '/women/calendar'
     | '/women/hormones'
     | '/women/insights'
     | '/women/pregnancy'
+    | '/admin'
     | '/women'
   id:
     | '__root__'
@@ -289,10 +302,6 @@ export interface FileRouteTypes {
     | '/_authenticated'
     | '/auth'
     | '/_authenticated/admin'
-    | '/_authenticated/admin/'
-    | '/_authenticated/admin/users'
-    | '/_authenticated/admin/activity'
-    | '/_authenticated/admin/health-overview'
     | '/_authenticated/women'
     | '/_authenticated/achievements'
     | '/_authenticated/ai-coach'
@@ -302,12 +311,17 @@ export interface FileRouteTypes {
     | '/_authenticated/nutrition'
     | '/_authenticated/onboarding'
     | '/_authenticated/profile'
+    | '/_authenticated/programs'
     | '/_authenticated/reports'
     | '/_authenticated/sleep'
+    | '/_authenticated/admin/activity'
+    | '/_authenticated/admin/health-overview'
+    | '/_authenticated/admin/users'
     | '/_authenticated/women/calendar'
     | '/_authenticated/women/hormones'
     | '/_authenticated/women/insights'
     | '/_authenticated/women/pregnancy'
+    | '/_authenticated/admin/'
     | '/_authenticated/women/'
   fileRoutesById: FileRoutesById
 }
@@ -319,11 +333,11 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/auth': {
-      id: '/auth'
-      path: '/auth'
-      fullPath: '/auth'
-      preLoaderRoute: typeof AuthRouteImport
+    '/': {
+      id: '/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/_authenticated': {
@@ -333,12 +347,19 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedRouteRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/': {
-      id: '/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
+    '/auth': {
+      id: '/auth'
+      path: '/auth'
+      fullPath: '/auth'
+      preLoaderRoute: typeof AuthRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated/achievements': {
+      id: '/_authenticated/achievements'
+      path: '/achievements'
+      fullPath: '/achievements'
+      preLoaderRoute: typeof AuthenticatedAchievementsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/admin': {
       id: '/_authenticated/admin'
@@ -347,18 +368,88 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminRouteRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/ai-coach': {
+      id: '/_authenticated/ai-coach'
+      path: '/ai-coach'
+      fullPath: '/ai-coach'
+      preLoaderRoute: typeof AuthenticatedAiCoachRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/dashboard': {
+      id: '/_authenticated/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof AuthenticatedDashboardRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/fitness': {
+      id: '/_authenticated/fitness'
+      path: '/fitness'
+      fullPath: '/fitness'
+      preLoaderRoute: typeof AuthenticatedFitnessRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/mental': {
+      id: '/_authenticated/mental'
+      path: '/mental'
+      fullPath: '/mental'
+      preLoaderRoute: typeof AuthenticatedMentalRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/nutrition': {
+      id: '/_authenticated/nutrition'
+      path: '/nutrition'
+      fullPath: '/nutrition'
+      preLoaderRoute: typeof AuthenticatedNutritionRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/onboarding': {
+      id: '/_authenticated/onboarding'
+      path: '/onboarding'
+      fullPath: '/onboarding'
+      preLoaderRoute: typeof AuthenticatedOnboardingRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/profile': {
+      id: '/_authenticated/profile'
+      path: '/profile'
+      fullPath: '/profile'
+      preLoaderRoute: typeof AuthenticatedProfileRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/programs': {
+      id: '/_authenticated/programs'
+      path: '/programs'
+      fullPath: '/programs'
+      preLoaderRoute: typeof AuthenticatedProgramsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/reports': {
+      id: '/_authenticated/reports'
+      path: '/reports'
+      fullPath: '/reports'
+      preLoaderRoute: typeof AuthenticatedReportsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/sleep': {
+      id: '/_authenticated/sleep'
+      path: '/sleep'
+      fullPath: '/sleep'
+      preLoaderRoute: typeof AuthenticatedSleepRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/women': {
+      id: '/_authenticated/women'
+      path: '/women'
+      fullPath: '/women'
+      preLoaderRoute: typeof AuthenticatedWomenRouteRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/admin/': {
       id: '/_authenticated/admin/'
       path: '/'
       fullPath: '/admin/'
       preLoaderRoute: typeof AuthenticatedAdminIndexRouteImport
-      parentRoute: typeof AuthenticatedAdminRouteRoute
-    }
-    '/_authenticated/admin/users': {
-      id: '/_authenticated/admin/users'
-      path: '/users'
-      fullPath: '/admin/users'
-      preLoaderRoute: typeof AuthenticatedAdminUsersRouteImport
       parentRoute: typeof AuthenticatedAdminRouteRoute
     }
     '/_authenticated/admin/activity': {
@@ -375,109 +466,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminHealthOverviewRouteImport
       parentRoute: typeof AuthenticatedAdminRouteRoute
     }
-    '/_authenticated/sleep': {
-      id: '/_authenticated/sleep'
-      path: '/sleep'
-      fullPath: '/sleep'
-      preLoaderRoute: typeof AuthenticatedSleepRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
-    }
-    '/_authenticated/reports': {
-      id: '/_authenticated/reports'
-      path: '/reports'
-      fullPath: '/reports'
-      preLoaderRoute: typeof AuthenticatedReportsRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
-    }
-    '/_authenticated/profile': {
-      id: '/_authenticated/profile'
-      path: '/profile'
-      fullPath: '/profile'
-      preLoaderRoute: typeof AuthenticatedProfileRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
-    }
-    '/_authenticated/onboarding': {
-      id: '/_authenticated/onboarding'
-      path: '/onboarding'
-      fullPath: '/onboarding'
-      preLoaderRoute: typeof AuthenticatedOnboardingRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
-    }
-    '/_authenticated/nutrition': {
-      id: '/_authenticated/nutrition'
-      path: '/nutrition'
-      fullPath: '/nutrition'
-      preLoaderRoute: typeof AuthenticatedNutritionRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
-    }
-    '/_authenticated/mental': {
-      id: '/_authenticated/mental'
-      path: '/mental'
-      fullPath: '/mental'
-      preLoaderRoute: typeof AuthenticatedMentalRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
-    }
-    '/_authenticated/fitness': {
-      id: '/_authenticated/fitness'
-      path: '/fitness'
-      fullPath: '/fitness'
-      preLoaderRoute: typeof AuthenticatedFitnessRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
-    }
-    '/_authenticated/dashboard': {
-      id: '/_authenticated/dashboard'
-      path: '/dashboard'
-      fullPath: '/dashboard'
-      preLoaderRoute: typeof AuthenticatedDashboardRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
-    }
-    '/_authenticated/ai-coach': {
-      id: '/_authenticated/ai-coach'
-      path: '/ai-coach'
-      fullPath: '/ai-coach'
-      preLoaderRoute: typeof AuthenticatedAiCoachRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
-    }
-    '/_authenticated/achievements': {
-      id: '/_authenticated/achievements'
-      path: '/achievements'
-      fullPath: '/achievements'
-      preLoaderRoute: typeof AuthenticatedAchievementsRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
-    }
-    '/_authenticated/women': {
-      id: '/_authenticated/women'
-      path: '/women'
-      fullPath: '/women'
-      preLoaderRoute: typeof AuthenticatedWomenRouteRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
+    '/_authenticated/admin/users': {
+      id: '/_authenticated/admin/users'
+      path: '/users'
+      fullPath: '/admin/users'
+      preLoaderRoute: typeof AuthenticatedAdminUsersRouteImport
+      parentRoute: typeof AuthenticatedAdminRouteRoute
     }
     '/_authenticated/women/': {
       id: '/_authenticated/women/'
       path: '/'
       fullPath: '/women/'
       preLoaderRoute: typeof AuthenticatedWomenIndexRouteImport
-      parentRoute: typeof AuthenticatedWomenRouteRoute
-    }
-    '/_authenticated/women/pregnancy': {
-      id: '/_authenticated/women/pregnancy'
-      path: '/pregnancy'
-      fullPath: '/women/pregnancy'
-      preLoaderRoute: typeof AuthenticatedWomenPregnancyRouteImport
-      parentRoute: typeof AuthenticatedWomenRouteRoute
-    }
-    '/_authenticated/women/insights': {
-      id: '/_authenticated/women/insights'
-      path: '/insights'
-      fullPath: '/women/insights'
-      preLoaderRoute: typeof AuthenticatedWomenInsightsRouteImport
-      parentRoute: typeof AuthenticatedWomenRouteRoute
-    }
-    '/_authenticated/women/hormones': {
-      id: '/_authenticated/women/hormones'
-      path: '/hormones'
-      fullPath: '/women/hormones'
-      preLoaderRoute: typeof AuthenticatedWomenHormonesRouteImport
       parentRoute: typeof AuthenticatedWomenRouteRoute
     }
     '/_authenticated/women/calendar': {
@@ -487,8 +487,50 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedWomenCalendarRouteImport
       parentRoute: typeof AuthenticatedWomenRouteRoute
     }
+    '/_authenticated/women/hormones': {
+      id: '/_authenticated/women/hormones'
+      path: '/hormones'
+      fullPath: '/women/hormones'
+      preLoaderRoute: typeof AuthenticatedWomenHormonesRouteImport
+      parentRoute: typeof AuthenticatedWomenRouteRoute
+    }
+    '/_authenticated/women/insights': {
+      id: '/_authenticated/women/insights'
+      path: '/insights'
+      fullPath: '/women/insights'
+      preLoaderRoute: typeof AuthenticatedWomenInsightsRouteImport
+      parentRoute: typeof AuthenticatedWomenRouteRoute
+    }
+    '/_authenticated/women/pregnancy': {
+      id: '/_authenticated/women/pregnancy'
+      path: '/pregnancy'
+      fullPath: '/women/pregnancy'
+      preLoaderRoute: typeof AuthenticatedWomenPregnancyRouteImport
+      parentRoute: typeof AuthenticatedWomenRouteRoute
+    }
   }
 }
+
+interface AuthenticatedAdminRouteRouteChildren {
+  AuthenticatedAdminActivityRoute: typeof AuthenticatedAdminActivityRoute
+  AuthenticatedAdminHealthOverviewRoute: typeof AuthenticatedAdminHealthOverviewRoute
+  AuthenticatedAdminUsersRoute: typeof AuthenticatedAdminUsersRoute
+  AuthenticatedAdminIndexRoute: typeof AuthenticatedAdminIndexRoute
+}
+
+const AuthenticatedAdminRouteRouteChildren: AuthenticatedAdminRouteRouteChildren =
+  {
+    AuthenticatedAdminActivityRoute: AuthenticatedAdminActivityRoute,
+    AuthenticatedAdminHealthOverviewRoute:
+      AuthenticatedAdminHealthOverviewRoute,
+    AuthenticatedAdminUsersRoute: AuthenticatedAdminUsersRoute,
+    AuthenticatedAdminIndexRoute: AuthenticatedAdminIndexRoute,
+  }
+
+const AuthenticatedAdminRouteRouteWithChildren =
+  AuthenticatedAdminRouteRoute._addFileChildren(
+    AuthenticatedAdminRouteRouteChildren,
+  )
 
 interface AuthenticatedWomenRouteRouteChildren {
   AuthenticatedWomenCalendarRoute: typeof AuthenticatedWomenCalendarRoute
@@ -512,25 +554,6 @@ const AuthenticatedWomenRouteRouteWithChildren =
     AuthenticatedWomenRouteRouteChildren,
   )
 
-interface AuthenticatedAdminRouteRouteChildren {
-  AuthenticatedAdminIndexRoute: typeof AuthenticatedAdminIndexRoute
-  AuthenticatedAdminUsersRoute: typeof AuthenticatedAdminUsersRoute
-  AuthenticatedAdminActivityRoute: typeof AuthenticatedAdminActivityRoute
-  AuthenticatedAdminHealthOverviewRoute: typeof AuthenticatedAdminHealthOverviewRoute
-}
-
-const AuthenticatedAdminRouteRouteChildren: AuthenticatedAdminRouteRouteChildren = {
-  AuthenticatedAdminIndexRoute: AuthenticatedAdminIndexRoute,
-  AuthenticatedAdminUsersRoute: AuthenticatedAdminUsersRoute,
-  AuthenticatedAdminActivityRoute: AuthenticatedAdminActivityRoute,
-  AuthenticatedAdminHealthOverviewRoute: AuthenticatedAdminHealthOverviewRoute,
-}
-
-const AuthenticatedAdminRouteRouteWithChildren =
-  AuthenticatedAdminRouteRoute._addFileChildren(
-    AuthenticatedAdminRouteRouteChildren,
-  )
-
 interface AuthenticatedRouteRouteChildren {
   AuthenticatedAdminRouteRoute: typeof AuthenticatedAdminRouteRouteWithChildren
   AuthenticatedWomenRouteRoute: typeof AuthenticatedWomenRouteRouteWithChildren
@@ -542,6 +565,7 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedNutritionRoute: typeof AuthenticatedNutritionRoute
   AuthenticatedOnboardingRoute: typeof AuthenticatedOnboardingRoute
   AuthenticatedProfileRoute: typeof AuthenticatedProfileRoute
+  AuthenticatedProgramsRoute: typeof AuthenticatedProgramsRoute
   AuthenticatedReportsRoute: typeof AuthenticatedReportsRoute
   AuthenticatedSleepRoute: typeof AuthenticatedSleepRoute
 }
@@ -557,6 +581,7 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedNutritionRoute: AuthenticatedNutritionRoute,
   AuthenticatedOnboardingRoute: AuthenticatedOnboardingRoute,
   AuthenticatedProfileRoute: AuthenticatedProfileRoute,
+  AuthenticatedProgramsRoute: AuthenticatedProgramsRoute,
   AuthenticatedReportsRoute: AuthenticatedReportsRoute,
   AuthenticatedSleepRoute: AuthenticatedSleepRoute,
 }
@@ -572,3 +597,13 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}

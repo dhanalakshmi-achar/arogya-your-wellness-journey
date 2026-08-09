@@ -111,6 +111,9 @@ export type Badge = {
   unlockedAt?: number;
 };
 
+export type StepEntry = { id: string; date: string; steps: number; at: number };
+export type WeightEntry = { id: string; date: string; weightKg: number; at: number };
+
 export type Profile = {
   name: string;
   email?: string;
@@ -162,6 +165,8 @@ type AppState = {
   badges: Badge[];
   xp: number;
   streaks: Record<string, { current: number; longest: number; lastDate: string }>;
+  stepLog: StepEntry[];
+  weightLog: WeightEntry[];
   // actions
   setHydrated: (b: boolean) => void;
   updateProfile: (p: Partial<Profile>) => void;
@@ -200,6 +205,10 @@ type AppState = {
   markAllRead: () => void;
   addXp: (amount: number, reason?: string) => void;
   bumpStreak: (key: string) => void;
+  addSteps: (date: string, steps: number) => void;
+  removeSteps: (id: string) => void;
+  addWeight: (w: Omit<WeightEntry, "id">) => void;
+  removeWeight: (id: string) => void;
   unlockBadge: (id: string, name: string, desc: string, icon: string) => void;
   reset: () => void;
   exportAll: () => string;
@@ -298,6 +307,8 @@ export const useApp = create<AppState>()(
       badges: [],
       xp: 0,
       streaks: {},
+      stepLog: [],
+      weightLog: [],
 
       setHydrated: (b) => set({ hydrated: b }),
       updateProfile: (p) => set({ profile: { ...get().profile, ...p } }),
@@ -440,6 +451,20 @@ export const useApp = create<AppState>()(
       markAllRead: () =>
         set({ notifications: get().notifications.map((x) => ({ ...x, read: true })) }),
 
+      addSteps: (date, steps) => {
+        const { stepLog } = get();
+        const existing = stepLog.find((s) => s.date === date);
+        if (existing) {
+          set({ stepLog: stepLog.map((s) => s.date === date ? { ...s, steps, at: Date.now() } : s) });
+        } else {
+          set({ stepLog: [...stepLog, { id: uid(), date, steps, at: Date.now() }] });
+        }
+        get().addXp(Math.floor(steps / 1000), "steps");
+      },
+      removeSteps: (id) => set({ stepLog: get().stepLog.filter((s) => s.id !== id) }),
+      addWeight: (w) => set({ weightLog: [...get().weightLog, { ...w, id: uid() }] }),
+      removeWeight: (id) => set({ weightLog: get().weightLog.filter((x) => x.id !== id) }),
+
       addXp: (amount) => set({ xp: get().xp + amount }),
       bumpStreak: (key) => {
         const s = get().streaks[key] ?? { current: 0, longest: 0, lastDate: "" };
@@ -477,6 +502,8 @@ export const useApp = create<AppState>()(
           badges: [],
           xp: 0,
           streaks: {},
+          stepLog: [],
+          weightLog: [],
           chat: [
             {
               id: uid(),

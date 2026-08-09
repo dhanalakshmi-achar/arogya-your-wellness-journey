@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { Dumbbell, Play, Trash2, Check, Plus, X } from "lucide-react";
+import { Dumbbell, Footprints, Play, Trash2, Check, Plus, X } from "lucide-react";
 import { PageHeader } from "@/components/health/PageHeader";
 import { useApp, type Workout, type Exercise } from "@/store/app";
 import { useState } from "react";
@@ -48,6 +48,8 @@ function FitnessPage() {
         accent="var(--color-primary)"
         actions={<NewWorkoutDialog />}
       />
+
+      <StepsSection />
 
       {activeWorkout && <ActiveSession workout={activeWorkout} onClose={() => setActive(null)} />}
 
@@ -112,6 +114,72 @@ function FitnessPage() {
         )}
       </section>
     </div>
+  );
+}
+
+function StepsSection() {
+  const stepLog = useApp((s) => s.stepLog);
+  const targets = useApp((s) => s.targets);
+  const addSteps = useApp((s) => s.addSteps);
+  const today = new Date().toISOString().slice(0, 10);
+  const todaySteps = stepLog.find((s) => s.date === today)?.steps ?? 0;
+  const pct = targets.steps ? Math.min(100, (todaySteps / targets.steps) * 100) : 0;
+  const [input, setInput] = useState<number | "">("");
+
+  const last7 = Array.from({ length: 7 }, (_, i) => {
+    const d = new Date();
+    d.setDate(d.getDate() - (6 - i));
+    const dateStr = d.toISOString().slice(0, 10);
+    const s = stepLog.find((x) => x.date === dateStr);
+    return { day: dateStr.slice(5), steps: s?.steps ?? 0 };
+  });
+
+  return (
+    <section className="rounded-3xl border bg-card p-6 shadow-soft">
+      <div className="flex items-center justify-between">
+        <div>
+          <div className="flex items-center gap-2">
+            <Footprints className="h-5 w-5 text-primary" />
+            <h3 className="font-heading text-lg font-semibold">Daily Steps</h3>
+          </div>
+          <p className="mt-1 text-sm text-muted-foreground">
+            <span className="tabular font-semibold text-foreground">{todaySteps.toLocaleString()}</span> of {targets.steps.toLocaleString()} steps
+          </p>
+        </div>
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            if (input) {
+              addSteps(today, Number(input));
+              toast.success(`${Number(input).toLocaleString()} steps logged · +${Math.floor(Number(input) / 1000)} XP`);
+              setInput("");
+            }
+          }}
+          className="flex items-center gap-2"
+        >
+          <Input
+            type="number"
+            placeholder="Steps"
+            value={input}
+            onChange={(e) => setInput(e.target.value ? Number(e.target.value) : "")}
+            className="w-28 rounded-2xl"
+          />
+          <Button type="submit" size="sm" className="rounded-2xl">Log</Button>
+        </form>
+      </div>
+      <div className="mt-4 h-2 overflow-hidden rounded-full bg-muted">
+        <div className="h-full rounded-full gradient-hero transition-all" style={{ width: `${pct}%` }} />
+      </div>
+      <div className="mt-4 h-24">
+        <ResponsiveContainer width="100%" height="100%">
+          <BarChart data={last7}>
+            <XAxis dataKey="day" tick={{ fontSize: 9 }} />
+            <Tooltip contentStyle={{ borderRadius: 12, fontSize: 12 }} />
+            <Bar dataKey="steps" fill="var(--color-primary)" radius={[4, 4, 0, 0]} />
+          </BarChart>
+        </ResponsiveContainer>
+      </div>
+    </section>
   );
 }
 

@@ -8,6 +8,7 @@ import {
   Sparkles,
   BarChart3,
   Trophy,
+  Zap,
   User,
   type LucideIcon,
 } from "lucide-react";
@@ -28,6 +29,7 @@ export const PRIMARY_NAV: NavItem[] = [
   { label: "AI Coach", to: "/ai-coach", icon: Sparkles },
   { label: "Reports", to: "/reports", icon: BarChart3 },
   { label: "Achievements", to: "/achievements", icon: Trophy },
+  { label: "Programs", to: "/programs", icon: Zap },
   { label: "Profile", to: "/profile", icon: User },
 ];
 

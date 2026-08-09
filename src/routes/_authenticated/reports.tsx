@@ -16,7 +16,10 @@ function ReportsPage() {
   const last7 = useLastNDays(7);
   const last30 = useLastNDays(30);
   const meals = useApp((s) => s.meals);
-  const workouts = useApp((s) => s.workouts.filter((w) => w.completed));
+const workouts = useApp((s) => s.workouts);
+
+const completedWorkouts = workouts.filter((w) => w.completed);
+  // const workouts = useApp((s) => s.workouts.filter((w) => w.completed));
   const sleep = useApp((s) => s.sleep);
   const exportAll = useApp((s) => s.exportAll);
 
@@ -25,7 +28,7 @@ function ReportsPage() {
       const blob = new Blob([exportAll()], { type: "application/json" });
       trigger(blob, "arogya-data.json");
     } else {
-      const rows = ["date,type,name,value", ...meals.map((m) => `${m.date},meal,${m.name},${m.calories}`), ...workouts.map((w) => `${w.date},workout,${w.name},${w.calories}`), ...sleep.map((s) => `${s.date},sleep,${s.hours}h,${s.quality}`)];
+      const rows = ["date,type,name,value", ...meals.map((m) => `${m.date},meal,${m.name},${m.calories}`),...completedWorkouts.map((w) => `${w.date},workout,${w.name},${w.calories}`), ...sleep.map((s) => `${s.date},sleep,${s.hours}h,${s.quality}`)];
       trigger(new Blob([rows.join("\n")], { type: "text/csv" }), "arogya-data.csv");
     }
     toast.success(`Exported ${kind.toUpperCase()}`);
@@ -46,7 +49,8 @@ function ReportsPage() {
       />
       <div className="grid gap-4 md:grid-cols-3">
         <Stat label="Meals (30d)" value={meals.filter((m) => m.date >= last30[0].day.padStart(5, "0") ? true : true).length} />
-        <Stat label="Workouts (30d)" value={workouts.length} />
+<Stat label="Workouts (30d)" value={completedWorkouts.length} />
+        {/* <Stat label="Workouts (30d)" value={workouts.length} /> */}
         <Stat label="Sleep logs (30d)" value={sleep.length} />
       </div>
 

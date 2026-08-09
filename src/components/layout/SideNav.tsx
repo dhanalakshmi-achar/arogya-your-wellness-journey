@@ -1,5 +1,5 @@
 import { Link, useRouterState } from "@tanstack/react-router";
-import { Heart, LogOut, Shield } from "lucide-react";
+import {LogOut, Shield } from "lucide-react";
 import { PRIMARY_NAV } from "@/constants/nav";
 import { cn } from "@/lib/utils";
 import { supabase } from "@/integrations/supabase/client";
@@ -23,9 +23,13 @@ export function SideNav() {
   return (
     <aside className="hidden md:sticky md:top-0 md:flex md:h-dvh md:w-64 md:flex-col md:border-r md:bg-sidebar md:px-4 md:py-6">
       <Link to="/dashboard" className="flex items-center gap-2 px-2">
-        <div className="grid h-9 w-9 place-items-center rounded-2xl gradient-hero text-white shadow-glow">
-          <Heart className="h-5 w-5" />
-        </div>
+       <div className="grid h-10 w-10 place-items-center overflow-hidden rounded-2xl">
+  <img
+    src="public/arogya.png"
+    alt="Arogya Logo"
+    className="h-full w-full object-contain"
+  />
+</div>
         <div>
           <div className="font-heading text-lg font-bold tracking-tight">Arogya</div>
           <div className="-mt-1 text-[11px] text-muted-foreground">Holistic health</div>
